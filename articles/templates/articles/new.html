@@ -14,4 +14,10 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ article_form.as_p }}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}
