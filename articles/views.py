@@ -22,13 +22,13 @@ def create(request):
         # title = request.POST.get('title')
         # content = request.POST.get('content')
         article_form = ArticleForm(request.POST)
-        # embed()
+        embed()
         if article_form.is_valid():
         # 검증에 성공하면 저장하고,
-            title = article_form.cleaned_data.get('title')
-            content = article_form.cleaned_data.get('content')
-            article = Article(title=title, content=content)
-            article.save()
+            # title = article_form.cleaned_data.get('title')
+            # content = article_form.cleaned_data.get('content')
+            # article = Article(title=title, content=content)
+            article_form.save()
             # redirect
             return redirect('articles:detail', article.pk)
         # else:
@@ -74,24 +74,13 @@ def delete(request, article_pk):
 def update(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == 'POST':
-        # article.title = request.POST.get('title')
-        # article.content = request.POST.get('content')
-        article_form = ArticleForm(request.POST)
-        # 검증
+        article_form = ArticleForm(request.POST, instance=article)
         if article_form.is_valid():
-            article.title = article_form.cleaned_data.get('title')
-            article.content = article_form.cleaned_data.get('content')
-            article.save()
-        return redirect('articles:detail', article.pk)
+            aritlce = article_form.save()
+            return redirect('articles:detail', article.pk)
     else:
-        article_form = ArticleForm(
-            initial={
-                'title' : article.title,
-                'content' : article.content
-            }
-        )
+        article_form = ArticleForm(instance=article)
     context = {
-        'article': article,
         'article_form' : article_form,
     }
     return render(request, 'articles/form.html', context)
