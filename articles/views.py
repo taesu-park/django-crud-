@@ -22,13 +22,12 @@ def create(request):
         # title = request.POST.get('title')
         # content = request.POST.get('content')
         article_form = ArticleForm(request.POST)
-        embed()
         if article_form.is_valid():
         # 검증에 성공하면 저장하고,
             # title = article_form.cleaned_data.get('title')
             # content = article_form.cleaned_data.get('content')
             # article = Article(title=title, content=content)
-            article_form.save()
+            article = article_form.save()
             # redirect
             return redirect('articles:detail', article.pk)
         # else:
