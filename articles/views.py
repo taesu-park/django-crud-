@@ -1,5 +1,5 @@
 from IPython import embed
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from .models import Article, Comment
@@ -43,7 +43,8 @@ def create(request):
     return render(request, 'articles/form.html', context)
 
 def detail(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+    # article = Article.objects.get(pk=article_pk)
+    article = get_object_or_404(Article, pk=article_pk)
     comments = article.comment_set.all()
     a = ['송편', '대추', '밤']
     context = {
@@ -55,7 +56,7 @@ def detail(request, article_pk):
 
 @require_POST
 def delete(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+    article = get_object_or_404(Article, pk=article_pk)
     # if request.method == 'POST':
     article.delete()
     
@@ -71,7 +72,7 @@ def delete(request, article_pk):
 #     return render(request, 'articles/edit.html', context)
 
 def update(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+    article = get_object_or_404(Article, pk=article_pk)
     if request.method == 'POST':
         article_form = ArticleForm(request.POST, instance=article)
         if article_form.is_valid():
@@ -86,7 +87,7 @@ def update(request, article_pk):
 
 @require_POST
 def comment_create(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+    article = get_object_or_404(Article, pk=article_pk)
     comment = Comment()
     comment.content = request.POST.get('comment_content')
     comment.article = article
