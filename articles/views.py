@@ -21,13 +21,14 @@ def create(request):
     if request.method == 'POST':
         # title = request.POST.get('title')
         # content = request.POST.get('content')
-        article_form = ArticleForm(request.POST)
+        article_form = ArticleForm(request.POST, request.FILES)
         if article_form.is_valid():
         # 검증에 성공하면 저장하고,
             # title = article_form.cleaned_data.get('title')
             # content = article_form.cleaned_data.get('content')
             # article = Article(title=title, content=content)
             article = article_form.save()
+
             # redirect
             return redirect('articles:detail', article.pk)
         # else:
