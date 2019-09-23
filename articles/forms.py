@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article
+from .models import Article, Comment
 
 class ArticleForm(forms.ModelForm):
     # 위젯 설정 2.
@@ -26,7 +26,10 @@ class ArticleForm(forms.ModelForm):
         #         }
         #     )
         # }
-        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('article',)
 
 
 # class ArticleForm(forms.Form):
