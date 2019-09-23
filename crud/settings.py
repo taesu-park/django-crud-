@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages', # message framework
     'django.contrib.staticfiles', # static file! css, js, image
     'django_extensions',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
